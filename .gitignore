@@ -43,4 +43,4 @@ Thumbs.db
 
 # Specific files that may contain sensitive information or are generated from other files and don't need versioning
 /config/database.php
-phinx.php # If it contains sensitive information
+phinx.php 
