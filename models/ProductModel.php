@@ -10,7 +10,7 @@ class ProductModel{
         $this->conn = $databaseConnection->getConnection();
     }
 
-    public function getAllProducts() {
+    public function getAllProducts(): array {
         $stmt = $this->conn->prepare('SELECT * FROM `products`');
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

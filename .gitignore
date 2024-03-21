@@ -1,0 +1,46 @@
+/vendor/
+/node_modules/
+
+# Environment files
+.env
+.env.example
+
+# IDE specific files
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vscode/
+*.swp
+*.swo
+*~
+
+
+# Log and cache
+/log/
+/cache/
+/tmp/
+
+# Dependency directories (Composer & NPM)
+vendor/
+node_modules/
+
+# Optional: Include Phinx logs if they're generated
+/phinxlog.*
+
+# Optional: Composer's lock file (include it if you want to ensure identical versions across all environments)
+#composer.lock
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Other common directories to ignore
+/public/uploads/
+/public/storage/
+/storage/
+/build/
+/coverage/
+
+# Specific files that may contain sensitive information or are generated from other files and don't need versioning
+/config/database.php
+phinx.php # If it contains sensitive information
