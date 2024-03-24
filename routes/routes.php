@@ -1,50 +1,50 @@
 <?php
 
 require_once __DIR__ . '/../controllers/ProductsController.php';
-
-
-$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$method = $_SERVER['REQUEST_METHOD'];
-
-$query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY) ?? '';
-
-parse_str($query, $params);
-
-$id = $params['id'] ?? null;
+require_once __DIR__ . '/Router.php';
 
 $productsController = new ProductsController();
 
-switch ($requestUri) {
-    case '/products':
-        switch ($method) {
-            case 'GET':
-                if ($id) {
-                    $productsController->getProductById($id);
-                } else {
-                    echo $productsController->getProducts();
-                }
-                break;
-            case 'POST':
-                $productsController->createProduct();
-                break;
-            case 'PUT':
-                if ($id) {
-                    $productsController->updateProduct($id);
-                }
-                break;
-            case 'DELETE':
-                if ($id) {
-                    $productsController->deleteProduct($id);
-                }
-                break;
-            default:
-                header('HTTP/1.1 405 Method Not Allowed');
-                break;
-        }
-        break;
-    default:
-        header('HTTP/1.1 404 Not Found');
-        echo '404 Not Found';
-        break;
-}
 
+Router::get('/products', function () {
+    global $productsController;
+    $id = $_GET['id'] ?? null;
+
+    if ($id) {
+        $productsController->getProductById($id);
+    } else {
+        echo $productsController->getProducts();
+    }
+});
+
+Router::post('/products', function () {
+    global $productsController;
+    $productsController->createProduct();
+});
+
+Router::put('/products', function () {
+    global $productsController;
+    $id = $_GET['id'] ?? null;
+
+        if ($id) {
+            $productsController->updateProduct($id);
+        } else {
+            http_response_code(400);
+            echo json_encode(["error" => "Missing product ID"]);
+        }
+    });
+
+    Router::delete('/products', function () {
+        global $productsController;
+        $id = $_GET['id'] ?? null;
+
+        if ($id) {
+            $productsController->deleteProduct($id);
+    } else {
+        http_response_code(400);
+        echo json_encode(["error" => "Missing product ID"]);
+    }
+});
+
+
+Router::dispatch(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), $_SERVER['REQUEST_METHOD']);
