@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../models/ProductModel.php';
-
+require_once __DIR__ . '/../validators/ProductValidator.php';
 
 
 class ProductsController
@@ -45,11 +45,11 @@ class ProductsController
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);
 
-        
-        if (!isset($data['title'], $data['description'], $data['price'])) {
+        $validationResult = ProductValidator::validateProductData($data);
+        if ($validationResult !== true) {
             header('Content-Type: application/json');
-            http_response_code(400); 
-            echo json_encode(['error' => 'Missing required fields: title, description, price']);
+            http_response_code(400);
+            echo json_encode(['error' => $validationResult]);
             exit;
         }
 
@@ -79,10 +79,11 @@ class ProductsController
         $data = json_decode($json, true);
 
         
-        if (!isset($data['title'], $data['description'], $data['price'])) {
+        $validationResult = ProductValidator::validateProductData($data);
+        if ($validationResult !== true) {
             header('Content-Type: application/json');
-            http_response_code(400); 
-            echo json_encode(['error' => 'Missing required fields: title, description, price']);
+            http_response_code(400);
+            echo json_encode(['error' => $validationResult]);
             exit;
         }
 
