@@ -44,4 +44,4 @@ DB_PASSWORD=password
 ```
 
 Ensure to replace `host_name`, `database_name`, `username`, and `password` with your actual database credentials.
-```
+
