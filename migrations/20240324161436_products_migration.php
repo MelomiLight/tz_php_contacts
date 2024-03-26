@@ -20,7 +20,7 @@ final class ProductsMigration extends AbstractMigration
     public function change(): void
     {
         $products_table = $this->table('products', ['id' => false, 'primary_key' => ['id']]);
-    
+
         $products_table
             ->addColumn('id', 'biginteger', ['identity' => true])
             ->addColumn('title', 'string', ['limit' => 255, 'null' => true])

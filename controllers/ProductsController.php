@@ -8,7 +8,8 @@ class ProductsController
 {
     private $productModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->productModel = new ProductModel();
     }
     public function getProducts()
@@ -17,7 +18,7 @@ class ProductsController
             $products = $this->productModel->getAllProducts();
 
             header('Content-Type: application/json');
-    
+
             echo json_encode($products);
         } catch (PDOException $e) {
             die ("Could not get products: " . $e->getMessage());
@@ -30,18 +31,18 @@ class ProductsController
             $product = $this->productModel->getProductById($id);
 
             header('Content-Type: application/json');
-        
+
             echo json_encode($product[0] ?? new stdClass);
-    
+
         } catch (PDOException $e) {
-            die("Could not get product: " . $id . " " . $e->getMessage());
+            die ("Could not get product: " . $id . " " . $e->getMessage());
         }
     }
-    
+
 
     public function createProduct()
     {
-       
+
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);
 
@@ -58,7 +59,7 @@ class ProductsController
         $price = $data['price'];
 
         try {
-            $productId = $this->productModel->createProduct($title,$price,$description);
+            $productId = $this->productModel->createProduct($title, $price, $description);
 
             header('Content-Type: application/json');
             header('HTTP/1.1 201 Created');
@@ -66,7 +67,7 @@ class ProductsController
             echo json_encode(['message' => 'Product created', 'id' => $productId]);
         } catch (PDOException $e) {
             header('Content-Type: application/json');
-            http_response_code(500); 
+            http_response_code(500);
             echo json_encode(["error" => "Could not create product: " . $e->getMessage()]);
             exit;
         }
@@ -78,7 +79,7 @@ class ProductsController
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);
 
-        
+
         $validationResult = ProductValidator::validateProductData($data);
         if ($validationResult !== true) {
             header('Content-Type: application/json');
@@ -93,15 +94,15 @@ class ProductsController
 
         try {
 
-            $this->productModel->updateProduct($id,$title,$price,$description);
+            $this->productModel->updateProduct($id, $title, $price, $description);
 
             header('Content-Type: application/json');
             header('HTTP/1.1 200 OK');
-        
+
             echo json_encode(['message' => 'Product updated successfully', 'id' => $id]);
         } catch (PDOException $e) {
             header('Content-Type: application/json');
-            http_response_code(500); 
+            http_response_code(500);
             echo json_encode(["error" => "Could not update product: " . $e->getMessage()]);
             exit;
         }

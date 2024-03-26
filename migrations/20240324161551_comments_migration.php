@@ -20,7 +20,7 @@ final class CommentsMigration extends AbstractMigration
     public function change(): void
     {
         $comments_table = $this->table('comments', ['id' => false, 'primary_key' => ['id']]);
-        
+
         $comments_table
             ->addColumn('id', 'biginteger', ['identity' => true])
             ->addColumn('product_id', 'biginteger', ['null' => true])

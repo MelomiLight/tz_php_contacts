@@ -26,20 +26,20 @@ Router::put('/products', function () {
     global $productsController;
     $id = $_GET['id'] ?? null;
 
-        if ($id) {
-            $productsController->updateProduct($id);
-        } else {
-            http_response_code(400);
-            echo json_encode(["error" => "Missing product ID"]);
-        }
-    });
+    if ($id) {
+        $productsController->updateProduct($id);
+    } else {
+        http_response_code(400);
+        echo json_encode(["error" => "Missing product ID"]);
+    }
+});
 
-    Router::delete('/products', function () {
-        global $productsController;
-        $id = $_GET['id'] ?? null;
+Router::delete('/products', function () {
+    global $productsController;
+    $id = $_GET['id'] ?? null;
 
-        if ($id) {
-            $productsController->deleteProduct($id);
+    if ($id) {
+        $productsController->deleteProduct($id);
     } else {
         http_response_code(400);
         echo json_encode(["error" => "Missing product ID"]);
