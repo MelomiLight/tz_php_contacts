@@ -18,7 +18,7 @@ php -S localhost:8000 routes/routes.php
   ```json
   {
     "title": "Bread",
-    "price": 500,
+    "price": 250,
     "description": "Just Water"
   }
   ```
@@ -26,7 +26,7 @@ php -S localhost:8000 routes/routes.php
   ```json
   {
     "title": "BreadNEW",
-    "price": 500,
+    "price": 250,
     "description": "Just Water"
   }
   ```
