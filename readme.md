@@ -1,47 +1,41 @@
-# PHP-CRUD-API
+# PHP Phonebook API
 
-This repository contains a PHP CRUD (Create, Read, Update, Delete) API utilizing Phinx for migrations, MySQL database, and PDO.
+This repository contains a simple PHP CRUD (Create, Read, Delete) API for managing a phonebook. It utilizes a JSON file for data storage, eliminating the need for complex database setups.
 
 ## Usage
 
 To start the server, run the following command:
 
 ```
-php -S localhost:8000 routes/routes.php
+php -S localhost:8000 -t ./
 ```
 
 ### Allowed Routes
 
-- **GET** `localhost:8000/products` - List all products
-- **GET** `localhost:8000/products?id=1` - List product where id=1
-- **POST** `localhost:8000/products` with JSON format - Creates product
-  ```json
-  {
-    "title": "Bread",
-    "price": 250,
-    "description": "Just Water"
-  }
-  ```
-- **PUT** `localhost:8000/products?id=1` - Updates product where id=1
-  ```json
-  {
-    "title": "BreadNEW",
-    "price": 250,
-    "description": "Just Water"
-  }
-  ```
-- **DELETE** `localhost:8000/products?id=1` - Deletes product where id=1
+- **GET** `localhost:8000/` - Displays the phonebook and a form for adding new contacts.
+- **GET** `localhost:8000/delete_contact.php?index={index}` - Deletes a contact where index is the array index of the contact in the contacts.json file.
+- **POST** `localhost:8000/add_contact.php` - Adds a new contact. Submit the form on the main page to create a new contact with fields for name and phone.
 
 ## Configuration
 
-Create a `.env` file for database configuration, for example:
+No database configuration is required as this application uses a JSON file (contacts.json) for storing contact data. Make sure this file is writable by the server.
 
-```
-DB_HOST=host_name
-DB_NAME=database_name
-DB_USER=username
-DB_PASSWORD=password
-```
 
-Ensure to replace `host_name`, `database_name`, `username`, and `password` with your actual database credentials.
+Contacts are stored in JSON format in the contacts.json file. Here's an example of how contact data is structured:
+
+  ```json
+[
+  {
+    "name": "John Doe",
+    "phone": "123-456-7890"
+  },
+  {
+    "name": "Jane Doe",
+    "phone": "098-765-4321"
+  }
+]
+  ```
+
+Each contact is an object with name and phone fields.
+
 
